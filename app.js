@@ -1,5 +1,7 @@
 
 const rowEl = document.querySelector('.row');
+const formEl = document.querySelector('form');
+const cardsEl = document.querySelector('.cards');
 
 const team = [
     {
@@ -42,24 +44,54 @@ const team = [
 
 for (let i = 0; i < team.length; i++) {
     const userTeam = team[i];
-    console.log(userTeam);
+    //console.log(userTeam);
 
-    const {img, name, profession, email} = userTeam;
-    const sowMarkup = 
-    `
-        <div class="col-4 my-4 bg">
-            <div class="card d-flex flex-row">
-                <div><img src="${img}"></div>
-                <div class="align-items-center">
-                    <h3>${name}</h3>
-                    <p>${profession}</p>
-                    <p class="text-primary">${email}</p>
+    const showMarkup = markup(userTeam);
+    //console.log(sowMarkup);
+
+    rowEl.innerHTML += showMarkup
+}
+
+formEl.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const userName = document.querySelector('.name').value;
+    const profession = document.querySelector('.ruolo').value;
+    const email = document.querySelector('.email').value;
+    const img = document.querySelector('.img').value;
+
+    const member = {
+        userName,
+        profession,
+        email,
+        img,
+    }
+
+    const showMarkup =  markup(member);
+    console.log(showMarkup);
+  
+    cardsEl.insertAdjacentHTML('beforeend', showMarkup);
+
+});
+
+function markup(member){
+    const {img, userName, profession, email} = member;
+    return `
+        <div class="card mb-3 padding" style="width: 440px;">
+            <div class="row g-0 bg-dark text-white">
+                <div class="col-md-4 col-sm-12">
+                    <img src="${img}" class="img-fluid rounded-start">
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <div class="card-body">
+                        <h5 class="card-title">${userName}</h5>
+                        <p class="card-text">${profession}.</p>
+                        <p class="card-text"><small class="text-body-secondary text-primary">${email}</small></p>
+                    </div>
                 </div>
             </div>
         </div>
     
     `
-    console.log(sowMarkup);
-    rowEl.insertAdjacentHTML('afterbegin', sowMarkup)
 }
 
